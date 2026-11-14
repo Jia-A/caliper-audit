@@ -7,6 +7,7 @@ import ReportSummary from "./report-summary.js";
 import ReportView from "./report-view.js";
 
 const FILE = "/report/quill.html";
+const FILE_NOTE = "This is the exact HTML file Caliper writes — unchanged, except that Quill's backend address is masked.";
 
 export default function ReportPage() {
   return (
@@ -16,9 +17,10 @@ export default function ReportPage() {
         <div className="rp-head">
           <p className="rp-eyebrow">A real report</p>
           <h1>Quill&apos;s &ldquo;generate a social post&rdquo; button</h1>
-          <p className="rp-note">
-            This is the exact HTML file Caliper writes — unchanged, except that Quill&apos;s backend address is masked.
-          </p>
+          {/* Wide screens show the file right below, so the claim sits here. Phones show the summary
+              first, so the claim moves to just above the file (report-view.js). */}
+          <p className="rp-note rp-note-wide">{FILE_NOTE}</p>
+          <p className="rp-note rp-note-phone">A summary of a real Caliper report, then the exact file it wrote.</p>
           <p className="rp-meta">
             <span>Nov 14, 2026</span>
             <span>caliper-ai 0.6.0</span>
@@ -27,7 +29,7 @@ export default function ReportPage() {
           </p>
         </div>
         <ReportSummary />
-        <ReportView src={FILE} title="Caliper report of Quill, Nov 14, 2026" />
+        <ReportView src={FILE} title="Caliper report of Quill, Nov 14, 2026" note={FILE_NOTE} />
       </main>
     </>
   );

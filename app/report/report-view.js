@@ -5,11 +5,11 @@
 import { useEffect, useRef, useState } from "react";
 import ReportFrame from "./report-frame.js";
 
-export default function ReportView({ src, title }) {
+export default function ReportView({ src, title, note }) {
   const [open, setOpen] = useState(false);
   const frame = useRef(null);
 
-  // Once the file is shown, bring its top under the sticky header. The iframe only grows to the
+  // Once the file is shown, bring it (with its note) under the sticky header. The iframe only grows to the
   // report's height after it lays out, and until then the page is too short to scroll that far,
   // so scroll again when it's taller than the screen.
   useEffect(() => {
@@ -34,8 +34,12 @@ export default function ReportView({ src, title }) {
           <p>The unchanged file Caliper wrote, every number and detail.</p>
         </div>
       )}
-      <div ref={frame} id="rp-frame" className="rp-frame" data-open={open ? "" : undefined}>
-        <ReportFrame src={src} title={title} />
+      <div ref={frame} id="rp-frame" className="rp-file" data-open={open ? "" : undefined}>
+        {/* phones only (CSS): the claim about the file, right above the file */}
+        <p className="rp-filenote">{note}</p>
+        <div className="rp-frame">
+          <ReportFrame src={src} title={title} />
+        </div>
       </div>
     </>
   );
