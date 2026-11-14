@@ -1,12 +1,21 @@
+import "./theme.css";
+
 export const metadata = {
-  title: "Caliper demo",
-  description: "A small streaming chat, measured by Caliper.",
+  title: "Caliper",
+  description: "Measures what your AI interface makes users wait for.",
 };
+
+// Runs before the first paint, so a saved light theme never flashes dark. Storage can throw
+// (private mode, blocked site data): then it stays dark.
+const THEME_SCRIPT = `try{if(localStorage.getItem("caliper-theme")==="light")document.documentElement.dataset.theme="light"}catch(e){}`;
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body style={{ margin: 0, fontFamily: "system-ui, sans-serif", background: "#fafaf8", color: "#111" }}>{children}</body>
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }

@@ -1,5 +1,5 @@
 {
-  "name": "caliper-demo",
+  "name": "caliper-audit",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,11 @@
     "test": "node --test test/*.test.mjs"
   },
   "dependencies": {
+    "@gsap/react": "2.1.2",
     "caliper-timings": "^0.6.0",
+    "gsap": "3.15.0",
+    "lenis": "1.3.27",
+    "motion": "14.9.0",
     "next": "^16.2.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
