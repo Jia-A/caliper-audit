@@ -3,7 +3,8 @@
 // scrolling on desktop. Three modes:
 // - desktop, motion OK: the hero pins, and scrolling scrubs it open: the intro gives way to the
 //   headline, the timeline card, 1514 ms counting up, the bars drawing in, then the buttons;
-// - narrow screens, motion OK: no pin, no Lenis; each hero piece and section reveals as it enters;
+// - narrow screens, motion OK: no pin, no Lenis; each hero piece and section reveals as it enters,
+//   and the timeline card is scrubbed by the scroll (1514 ms counting up, the bars drawing in);
 // - reduced motion: nothing moves, everything is shown as the server rendered it.
 // Without JS the page is the server's HTML, fully shown.
 import { useEffect } from "react";
@@ -77,17 +78,16 @@ export default function ScrollFX() {
         once: true,
         onEnter: (b) => gsap.to(b, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.08, ease: "power2.out" }),
       });
-      ScrollTrigger.create({
-        trigger: ".tl",
-        start: "top 85%",
-        once: true,
-        onEnter: () => {
-          gsap.to(".tl", { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" });
-          c.update();
-          gsap.to(c.o, { v: 1514, duration: 0.4, delay: 0.1, ease: "power1.out", onUpdate: c.update });
-          gsap.to(".hero .seg", { clipPath: "inset(0 0% 0 0)", duration: 0.35, stagger: 0.12, delay: 0.15, ease: "power2.out" });
-        },
-      });
+      // No pin, but the timeline still uncovers with the scroll: from when the card enters until
+      // it's two-thirds up the screen, 1514 ms counts up and the bars draw in, both ways.
+      c.update();
+      gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: { trigger: ".tl", start: "top 92%", end: "top 30%", scrub: 0.3 },
+      })
+        .to(".tl", { autoAlpha: 1, y: 0, duration: 0.25, ease: "power2.out" }, 0)
+        .to(c.o, { v: 1514, duration: 0.75, onUpdate: c.update }, 0.15)
+        .to(".hero .seg", { clipPath: "inset(0 0% 0 0)", stagger: 0.2, duration: 0.35 }, 0.25);
       reveals();
       return () => {
         total.textContent = "1514 ms";

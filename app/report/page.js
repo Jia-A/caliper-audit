@@ -1,8 +1,10 @@
 // /report: the real Quill report, as Caliper wrote it, inside the site's frame. The file itself
 // (public/report/quill.html) is served unchanged at /report/quill.html, the backend host aside.
+// On phones a designed summary of it comes first, and the file is one tap away.
 import "./report.css";
 import SiteHeader from "../site-header.js";
-import ReportFrame from "./report-frame.js";
+import ReportSummary from "./report-summary.js";
+import ReportView from "./report-view.js";
 
 const FILE = "/report/quill.html";
 
@@ -24,9 +26,8 @@ export default function ReportPage() {
             <a href={FILE}>Open the file on its own →</a>
           </p>
         </div>
-        <div className="rp-frame">
-          <ReportFrame src={FILE} title="Caliper report of Quill, Nov 14, 2026" />
-        </div>
+        <ReportSummary />
+        <ReportView src={FILE} title="Caliper report of Quill, Nov 14, 2026" />
       </main>
     </>
   );

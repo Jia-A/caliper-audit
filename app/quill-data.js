@@ -72,6 +72,12 @@ export const PROMPT = {
 
 // The verdict and Advice, word for word.
 export const VERDICT = "People waited 1514 ms for the first word in the one warm run.";
+export const VERDICT_SIDES = [
+  "In the browser: headers → first paint — 5.8× its limit, in 1 of 1 warm runs.",
+  "Inside the server: postgres — 5.1× its limit, in 1 of 1 marked visits.",
+];
+// The server's top "Where to look" item (marked visit 1, on the server's clock).
+export const SERVER_TOP = { name: "postgres", ms: 506, limit: 100, ratio: "5.1×", share: 48 };
 export const ADVICE = [
   {
     line: "The first run (a fresh browser) waited 132 ms longer for the first word than the one warm run (1646 vs 1514 ms).",

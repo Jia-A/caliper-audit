@@ -14,3 +14,43 @@
   .rp { padding-top: 32px; }
   .rp-frame { border-radius: 10px; margin: 0 -8px; }
 }
+
+/* Phones: a designed summary first (report-summary.js), the file behind "Show the full report"
+   (report-view.js). From 640 px up neither shows and the file is as before. */
+.rs, .rs-more { display: none; }
+@media (max-width: 639.98px) {
+  .rs { display: grid; gap: 14px; margin: 0 0 22px; }
+  .rs .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .rs-eyebrow { margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
+  .rs-card, .rs-verdict, .rs-advice, .rs-server { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+  .rs p { margin: 0; }
+  .rs-total { font-size: 52px; font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .rs-cap { color: var(--muted); font-size: 14px; margin-top: 2px !important; }
+  .rs-bar { display: flex; gap: 2px; height: 40px; margin-top: 16px; border-radius: 8px; overflow: hidden; background: var(--surface-2); }
+  .rs-seg { flex-basis: 0; min-width: 4px; display: flex; align-items: center; justify-content: center; }
+  .rs-seg.ok { background: var(--ok-seg); }
+  .rs-seg.over { background: repeating-linear-gradient(135deg, var(--over) 0 8px, var(--over-2) 8px 16px); color: var(--on-over); }
+  .rs-seg b { font-size: 11px; letter-spacing: 0.06em; padding: 1px 5px; border: 1px solid currentColor; border-radius: 4px; }
+  .rs-key { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; font-size: 14px; }
+  .rs-key li { display: grid; grid-template-columns: 12px 1fr; column-gap: 10px; align-items: baseline; }
+  .rs-key .sw { width: 12px; height: 12px; border-radius: 3px; background: var(--ok-seg); transform: translateY(1px); }
+  .rs-key li.over .sw { background: var(--over); }
+  .rs-key .mono { grid-column: 2; color: var(--muted); font-size: 13px; }
+  .rs-key b { color: var(--over); }
+  .rs-h { font-size: 12px; font-weight: 650; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 8px !important; }
+  .rs-head { font-size: 18px; font-weight: 700; line-height: 1.35; }
+  .rs-verdict ul, .rs-advice ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; font-size: 15px; }
+  .rs-advice ul { gap: 14px; margin: 0; }
+  .rs-advice details { margin-top: 4px; font-size: 14px; color: var(--muted); }
+  .rs-advice summary { cursor: pointer; color: var(--link); font-weight: 600; }
+  .rs-advice details p { margin-top: 6px !important; }
+  .rs-big { font-size: 26px; font-weight: 700; }
+  .rs-server p:last-child { margin-top: 4px !important; font-size: 15px; }
+  .rs-server b { color: var(--over); }
+  .rs-more { display: block; margin: 0 0 18px; }
+  .rs-btn { width: 100%; height: 48px; border-radius: 10px; border: 1px solid var(--accent); background: var(--accent); color: var(--bg); font: inherit; font-weight: 650; font-size: 16px; cursor: pointer; }
+  .rs-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .rs-more p { margin: 8px 0 0; font-size: 13px; color: var(--muted); text-align: center; }
+  .rp-frame:not([data-open]) { display: none; }
+  .rp-frame { scroll-margin-top: 72px; }
+}

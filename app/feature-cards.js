@@ -1,10 +1,12 @@
 "use client";
 // The four feature cards: plain HTML mini visuals from the Quill report's numbers. Click or tap
 // opens a panel; the panel and Motion load on first use (fetched early when a card is pointed at,
-// touched or focused). X, Esc or the back button close it.
+// touched or focused). X, Esc or the back button close it. On a tap (touch, motion allowed) the
+// measuring guides snap to the card first (tap-measure.js), then it opens.
 import { Suspense, lazy, useCallback, useEffect, useRef, useState } from "react";
 import { PROMPT, RUNS, STOP } from "./quill-data.js";
 import { startScroll, stopScroll } from "./smooth.js";
+import { measureTap } from "./tap-measure.js";
 
 const loadPanel = () => import("./feature-panel.js");
 const FeaturePanel = lazy(loadPanel);
@@ -94,6 +96,23 @@ export default function FeatureCards() {
     history.pushState({ card: id }, "", `#${id}`);
     setOpen(id);
   }
+  // The last press on a card, so a click knows whether it was a tap and where.
+  const press = useRef(null);
+  const measuring = useRef(false);
+  async function onCard(id) {
+    const p = press.current;
+    press.current = null;
+    const tap = p && p.type !== "mouse" && matchMedia("(prefers-reduced-motion: no-preference)").matches;
+    if (!tap) return openCard(id);
+    if (measuring.current) return; // a second tap while it measures
+    measuring.current = true;
+    try {
+      await measureTap(cards.current[id], p.x, p.y);
+      openCard(id);
+    } finally {
+      measuring.current = false;
+    }
+  }
 
   // open and close follow the URL, so the back button closes
   useEffect(() => {
@@ -149,7 +168,9 @@ export default function FeatureCards() {
               ref={(el) => (cards.current[c.id] = el)}
               type="button"
               className={`fcard${shown === c.id ? " away" : ""}`}
-              onClick={() => openCard(c.id)}
+              onPointerDown={(e) => (press.current = { type: e.pointerType, x: e.clientX, y: e.clientY })}
+              onPointerCancel={() => (press.current = null)}
+              onClick={() => onCard(c.id)}
               onPointerEnter={prefetch}
               onTouchStart={prefetch}
               onFocus={prefetch}
