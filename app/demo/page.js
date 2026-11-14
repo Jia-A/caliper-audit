@@ -44,24 +44,24 @@ export default function Page() {
 
   return (
     <main style={{ maxWidth: 640, margin: "0 auto", padding: "32px 16px" }}>
-      <p style={{ margin: 0 }}><a href="/" style={{ color: "#555" }}>← What Caliper does</a></p>
+      <p style={{ margin: 0 }}><a href="/" style={{ color: "var(--muted)" }}>← What Caliper does</a></p>
       <h1 style={{ fontSize: 24 }}>Caliper</h1>
-      <p style={{ color: "#555" }}>Ask about Caliper. Replies are short, and there&apos;s a small limit per visitor.</p>
-      <p style={{ color: "#555" }}>Demo runs on a free model tier — don&apos;t type anything private.</p>
+      <p style={{ color: "var(--muted)" }}>Ask about Caliper. Replies are short, and there&apos;s a small limit per visitor.</p>
+      <p style={{ color: "var(--muted)" }}>Demo runs on a free model tier — don&apos;t type anything private.</p>
       <ol style={{ paddingLeft: 20 }}>
         {history.map((m, i) => (
-          <li key={i} style={{ margin: "8px 0", color: m.role === "user" ? "#111" : "#333" }}>
+          <li key={i} style={{ margin: "8px 0", color: m.role === "user" ? "var(--text)" : "var(--muted)" }}>
             <b>{m.role === "user" ? "You" : "Demo"}:</b> {m.content}
           </li>
         ))}
       </ol>
-      <div id="reply" aria-live="polite" style={{ minHeight: 48, whiteSpace: "pre-wrap", padding: 12, background: "#fff", border: "1px solid #ddd", borderRadius: 8 }}>
+      <div id="reply" aria-live="polite" style={{ minHeight: 48, whiteSpace: "pre-wrap", padding: 12, background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 8 }}>
         {reply}
       </div>
-      {error && <p role="alert" style={{ color: "#a00" }}>{error}</p>}
+      {error && <p role="alert" style={{ color: "var(--src-outside)" }}>{error}</p>}
       <form onSubmit={send} style={{ display: "flex", gap: 8, marginTop: 12 }}>
-        <input id="prompt" value={prompt} maxLength={MAX_CHARS} onChange={(e) => setPrompt(e.target.value)} placeholder="Ask something" aria-label="Your question" style={{ flex: 1, padding: 10, fontSize: 16 }} />
-        <button type="submit" disabled={busy} style={{ padding: "10px 16px", fontSize: 16 }}>Send</button>
+        <input id="prompt" value={prompt} maxLength={MAX_CHARS} onChange={(e) => setPrompt(e.target.value)} placeholder="Ask something" aria-label="Your question" style={{ flex: 1, padding: 10, fontSize: 16, background: "var(--surface)", color: "var(--text)", border: "1px solid var(--border)", borderRadius: 8 }} />
+        <button type="submit" disabled={busy} style={{ padding: "10px 16px", fontSize: 16, background: "var(--accent)", color: "var(--on-accent)", border: 0, borderRadius: 8, fontWeight: 600 }}>Send</button>
       </form>
     </main>
   );

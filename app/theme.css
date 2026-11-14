@@ -1,0 +1,63 @@
+/* Palette A (Sage). Dark by default; data-theme="light" on <html> switches. Rust is gone: sage is
+   the accent (buttons, links), amber marks OVER, and the two never share a job. */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #141514;
+  --surface: #1c1e1c;
+  --surface-2: #232623;
+  --border: #2d302d;
+  --text: #e8ebe6;
+  --muted: #a3aaa0;
+  --accent: #9cc3a4;
+  --on-accent: #141514;
+  --link: #a8ceb0;
+  --over: #d7a24f;
+  --over-2: #c49144;
+  --on-over: #141514;
+  --ok-seg: #4a4f4a;
+  --src-app: #86a9cf;
+  --src-user: #d9cc7a;
+  --src-outside: #d68a8a;
+  --src-unknown: #8b9088;
+  --seg-click: #8b9088;
+  --seg-preflight: #b9a3d1;
+  --seg-ttfb: #86a9cf;
+  --seg-paint: #7fbfb4;
+  --measure: rgba(232, 235, 230, 0.13);
+  --measure-snap: rgba(156, 195, 164, 0.45);
+  --glow: rgba(156, 195, 164, 0.55);
+  --scrim: rgba(8, 9, 8, 0.6);
+  --header: rgba(20, 21, 20, 0.96);
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f6f7f4;
+  --surface: #fdfefc;
+  --surface-2: #eef0eb;
+  --border: #dfe3dc;
+  --text: #191b18;
+  --muted: #5d635a;
+  --accent: #4c7656;
+  --on-accent: #ffffff;
+  --link: #45704f;
+  --over: #e2b25e;
+  --over-2: #d4a24f;
+  --on-over: #191b18;
+  --ok-seg: #cdd2c9;
+  --src-app: #3a6ea8;
+  --src-user: #9b8a1f;
+  --src-outside: #b84a4a;
+  --src-unknown: #8b9088;
+  --seg-click: #8b9088;
+  --seg-preflight: #8e6fb3;
+  --seg-ttfb: #3a6ea8;
+  --seg-paint: #2f8a7c;
+  --measure: rgba(25, 27, 24, 0.12);
+  --measure-snap: rgba(76, 118, 86, 0.45);
+  --glow: rgba(76, 118, 86, 0.5);
+  --scrim: rgba(25, 27, 24, 0.35);
+  --header: rgba(246, 247, 244, 0.96);
+}
+html { background: var(--bg); }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); }
