@@ -209,6 +209,18 @@ html.locked { overflow: hidden; }
 .lp .nots li { padding: 16px 0 16px 34px; border-bottom: 1px solid var(--border); position: relative; font-size: 18px; }
 .lp .nots li::before { content: "—"; position: absolute; left: 0; color: var(--muted); font-family: var(--mono); }
 
+/* what's next: shaped like the feature cards, but visibly not there yet (dashed, flat, quiet text,
+   no hover, not .fcard so the measuring cursor ignores them) */
+.lp .next { padding-top: 0; }
+.lp .ncards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+.lp .ncard { display: flex; flex-direction: column; gap: 6px; padding: 18px; border: 1px dashed var(--border); border-radius: 14px; background: transparent; color: var(--muted); }
+.lp .ntag { align-self: flex-start; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border: 1px solid var(--border); border-radius: 999px; margin-bottom: 8px; }
+.lp .ncard h3 { font-size: 17px; font-weight: 650; color: color-mix(in srgb, var(--text) 70%, var(--muted)); }
+.lp .ncard p { font-size: 15px; }
+.lp .next-note { margin-top: 28px; font-size: 15px; }
+.lp .next-note a { font-weight: 650; text-decoration: none; }
+.lp .next-note a:hover { text-decoration: underline; }
+
 /* final call to action, footer */
 .lp .cta { text-align: center; }
 .lp .foot { border-top: 1px solid var(--border); padding: 28px 0 44px; font-size: 14px; color: var(--muted); }
@@ -217,7 +229,7 @@ html.locked { overflow: hidden; }
 .lp .foot .fine { flex-basis: 100%; font-size: 12px; }
 
 /* tablets and phones */
-@media (max-width: 1099.98px) { .lp .cards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1099.98px) { .lp .cards { grid-template-columns: repeat(2, 1fr); } .lp .ncards { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 899.98px) {
   .lp .hero-grid { grid-template-columns: 1fr; gap: 40px; padding-top: 48px; padding-bottom: 72px; }
   .lp .steps { grid-template-columns: 1fr; }
@@ -227,6 +239,7 @@ html.locked { overflow: hidden; }
 @media (max-width: 639.98px) {
   .lp section { padding: 80px 0; }
   .lp .cards { grid-template-columns: 1fr; }
+  .lp .ncards { grid-template-columns: 1fr; gap: 12px; }
   .lp .halves { grid-template-columns: 1fr; }
   .lp .tl { padding: 18px; }
   .lp .seg { padding: 0 6px; }

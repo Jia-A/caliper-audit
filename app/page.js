@@ -14,6 +14,15 @@ const INSTALL = "npm i -g caliper-ai && npx playwright@1.64.1 install chromium";
 const README = "https://github.com/Jia-A/caliper/tree/main/packages/cli#readme";
 const GITHUB = "https://github.com/Jia-A/caliper";
 
+// Ideas, not promises: nothing here is built, and none of it has a date.
+const NEXT = [
+  { title: "3D replay", line: "Watch a request travel through your app." },
+  { title: "Firefox + Safari", line: "Today Caliper needs CDP, which only Chromium has." },
+  { title: "Hosted Caliper", line: "Run it without installing." },
+  { title: "History", line: "See if you're getting faster or slower over time." },
+  { title: "More backends", line: "Server timings for Go, PHP and Java." },
+];
+
 function HeroTimeline() {
   return (
     <figure className="tl" aria-label="Quill's warm run: 1514 ms from click to first word, split into three segments">
@@ -160,6 +169,27 @@ export default function Landing() {
               <li>It doesn&apos;t detect prompt injection.</li>
               <li>Chromium and HTTP only. Replies over a WebSocket aren&apos;t timed.</li>
             </ul>
+          </div>
+        </section>
+
+        <section className="next">
+          <div className="wrap">
+            <div className="section-head" data-rv>
+              <p className="eyebrow mono">What&apos;s next</p>
+              <h2>None of this is built yet.</h2>
+            </div>
+            <ul className="ncards">
+              {NEXT.map((n) => (
+                <li key={n.title} className="ncard" data-rv>
+                  <span className="ntag mono">Not built yet</span>
+                  <h3>{n.title}</h3>
+                  <p>{n.line}</p>
+                </li>
+              ))}
+            </ul>
+            <p className="next-note" data-rv>
+              <a href={GITHUB}>Star on GitHub to follow along →</a>
+            </p>
           </div>
         </section>
 
