@@ -25,6 +25,10 @@ html.locked .lp .measure { display: none; }
   color: var(--muted); background: var(--bg); border: 1px solid var(--border); opacity: 0; transition: opacity 120ms; }
 .lp .readout.on { opacity: 0.9; }
 .lp .measure.snap .readout { color: var(--text); border-color: var(--measure-snap); }
+/* the tap version (tap-measure.js): the same guides, already snapped, over the card for ~400 ms */
+.lp .tapmeasure { position: fixed; inset: 0; z-index: 15; pointer-events: none; }
+.lp .tapmeasure .mline { background: var(--measure-snap); transition: none; }
+.lp .tapmeasure .readout { color: var(--text); border-color: var(--measure-snap); transition: none; }
 
 .lp .btn:focus-visible, .lp .fcard:focus-visible, .lp .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .lp .brand { font-weight: 750; font-size: 18px; color: var(--text); text-decoration: none; letter-spacing: -0.01em; }
