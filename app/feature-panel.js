@@ -153,7 +153,7 @@ export default function FeaturePanel({ feature, closing, cardEl, onClose, onClos
             <div className="panel-text">
               {feature.text.map((t) => <p key={t}>{t}</p>)}
               <p className="panel-src">Quill, Nov 14, 2026.</p>
-              <a className="panel-link" href="/report/quill.html">View in the real report →</a>
+              <a className="panel-link" href="/report">View in the real report →</a>
             </div>
           </motion.div>
         </div>

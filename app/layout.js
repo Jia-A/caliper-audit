@@ -1,4 +1,5 @@
 import "./theme.css";
+import "./site.css";
 
 export const metadata = {
   title: "Caliper",

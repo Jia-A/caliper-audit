@@ -112,7 +112,7 @@ test("the very same messages array goes to the model and to run.prompt, with the
   assert.equal(prompt.mock.callCount(), 1);
   assert.equal(prompt.mock.calls[0].arguments[0], sent, "the same array object");
   const { parts } = prompt.mock.calls[0].arguments[1];
-  assert.deepEqual(parts.map((p) => [p.message, p.name, p.source]), [[0, "persona", "app"], [0, "rules", "app"], [1, "visitor", "user"]]);
+  assert.deepEqual(parts.map((p) => [p.message, p.name, p.source]), [[0, "persona", "app"], [0, "rules", "app"], [0, "facts", "app"], [1, "visitor", "user"]]);
   for (const p of parts) assert.ok(sent[p.message].content.includes(p.text));
 });
 
@@ -121,7 +121,7 @@ test("source: each visitor message and each earlier reply the browser sends back
   const history = [{ role: "user", content: "first" }, { role: "assistant", content: "a reply" }, { role: "user", content: "second" }];
   await run(chat(history, { headers: { "x-caliper-run": "run_src", "x-caliper-token": CALIPER } }), ENV);
   const [messages, { parts }] = prompt.mock.calls[0].arguments;
-  assert.deepEqual(parts.map((p) => [p.message, p.name, p.source]), [[0, "persona", "app"], [0, "rules", "app"], [1, "visitor", "user"], [2, "earlier_reply", "user"], [3, "visitor", "user"]]);
+  assert.deepEqual(parts.map((p) => [p.message, p.name, p.source]), [[0, "persona", "app"], [0, "rules", "app"], [0, "facts", "app"], [1, "visitor", "user"], [2, "earlier_reply", "user"], [3, "visitor", "user"]]);
   for (const p of parts.filter((q) => q.source === "user")) assert.equal(p.text, messages[p.message].content);
 });
 
@@ -132,7 +132,7 @@ test("a marked request: the record has the marks, prompt sizes and parts, and ne
   const record = await res.json();
   assert.deepEqual(Object.keys(record.marks), ["limitStart", "limitEnd", "modelCallSent", "firstChunk"]);
   assert.deepEqual(record.prompt.messages.map((m) => m.role), ["system", "user"]);
-  assert.deepEqual(record.prompt.messages[0].parts.map((p) => [p.name, p.found]), [["persona", true], ["rules", true]]);
+  assert.deepEqual(record.prompt.messages[0].parts.map((p) => [p.name, p.found]), [["persona", true], ["rules", true], ["facts", true]]);
   assert.ok(!JSON.stringify(record).includes("Caliper measure"));
 });
 
@@ -183,10 +183,20 @@ test("Upstash down: refused (503), never let through to the model", async () => 
   assert.equal(model.requests.length, 0);
 });
 
-test("the model refusing: 502 without its message or the key", async () => {
+test("the model's own rate limit (429): 503 busy, Retry-After 60, without its message or the key", async () => {
   model.status = 429;
   const { res, text } = await run(chat(ask));
+  assert.equal(res.status, 503);
+  assert.equal(res.headers.get("retry-after"), "60");
+  assert.deepEqual(JSON.parse(text), { error: "The demo is busy right now. Try again in a minute.", busy: true });
+  assert.ok(!text.includes(KEY) && !text.includes("quota"), text);
+});
+
+test("the model failing otherwise: 502 without its message or the key", async () => {
+  model.status = 500;
+  const { res, text } = await run(chat(ask));
   assert.equal(res.status, 502);
+  assert.equal(res.headers.get("retry-after"), null);
   assert.ok(!text.includes(KEY) && !text.includes("quota"), text);
 });
 

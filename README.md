@@ -1,11 +1,12 @@
 # caliper-audit
 
-Caliper's site, at https://caliper-audit.vercel.app: a landing page, and a small streaming chat built to be measured by [Caliper](https://github.com/Jia-A/caliper) and to show what it sees. Next.js App Router, plain JavaScript, no dependencies beyond Next.js, React and `caliper-timings`. The old address, `caliper-demo.vercel.app`, redirects here (307, set in Vercel's domain settings, not in code). Caliper never follows redirects, so `--server-timings` needs the new origin.
+Caliper's site, at https://caliper-audit.vercel.app: a landing page, and a small streaming chat built to be measured by [Caliper](https://github.com/Jia-A/caliper) and to show what it sees. Next.js App Router, plain JavaScript. Besides Next.js, React and `caliper-timings`, the landing page uses GSAP (ScrollTrigger), Lenis and Motion, pinned to exact versions. The old address, `caliper-demo.vercel.app`, redirects here (307, set in Vercel's domain settings, not in code). Caliper never follows redirects, so `--server-timings` needs the new origin.
 
-- `/`: the landing page (`app/page.js`), static. Its commands and code are quoted from the caliper-ai and caliper-timings READMEs; change them there first.
-- `/demo`: the chat (`app/demo/page.js`).
-- `/report/quill.html`: a full Caliper report of Quill, from `public/report/`, with Quill's backend host masked as `quill-backend.example`. The screenshots in `public/shots/` come from it.
-- `POST /api/chat`: checks the input and the rate limits, sends the conversation to the model, and streams the reply back as plain text. The same `messages` array goes to the model and to `caliper-timings`' `run.prompt()`, which records sizes only, never text. The system prompt's two parts (`persona`, `rules`) are named and labelled `source: "app"`; each visitor message is a `visitor` part and each earlier reply an `earlier_reply` part, both labelled `"user"`: the browser sends the replies back, so only this visitor, directly or through the model's replies to them, could have put anything in them. Labels are recorded from caliper-timings 0.6.0 on; older versions ignore them.
+- `/`: the landing page (`app/page.js`), static HTML with motion added on top (none with reduced motion). Its claims are from the caliper-ai and caliper-timings READMEs, and every number is in `app/quill-data.js`, from the Quill report; change them there first.
+- `/demo`: the chat (`app/demo/chat.js`). Only the reply is ever written into `#reply`; each answer shows once (in `#reply` while it's the latest, then in the list above).
+- `/report`: that report inside the site's frame (`app/report/`). The file is served unchanged; in the browser, after it loads, the page switches the report's own dark rules (`@media (prefers-color-scheme: dark)`) on or off to follow the site's theme toggle, and sizes the iframe to the report's height.
+- `/report/quill.html`: a full Caliper report of Quill (Nov 14, 2026), from `public/report/`, byte for byte as Caliper wrote it except Quill's backend host, masked as `quill-backend.example`. The screenshots in `public/shots/` come from it (no page uses them since the v4 landing page).
+- `POST /api/chat`: checks the input and the rate limits, sends the conversation to the model, and streams the reply back as plain text. The same `messages` array goes to the model and to `caliper-timings`' `run.prompt()`, which records sizes only, never text. The system prompt's three parts (`persona`, `rules`, and `facts`: what the model may say about Caliper, from its READMEs) are named and labelled `source: "app"`; each visitor message is a `visitor` part and each earlier reply an `earlier_reply` part, both labelled `"user"`: the browser sends the replies back, so only this visitor, directly or through the model's replies to them, could have put anything in them. Labels are recorded from caliper-timings 0.6.0 on; older versions ignore them.
 - `GET /__caliper/timings/:id`: Caliper's endpoint, from the folder `app/%5F_caliper/timings/[id]` (a `_` folder is private in the App Router; `%5F` is an encoded `_`). Without `CALIPER_TOKEN` it answers 404 like any unknown route.
 
 ## Limits (`lib/limits.js`)
@@ -20,7 +21,7 @@ Caliper's site, at https://caliper-audit.vercel.app: a landing page, and a small
 
 Counters live in Upstash Redis: one per window, `INCR` and `EXPIRE` in one `/multi-exec` transaction (6 commands per chat request). Over a limit: `429` with `Retry-After`, and no model call. If Upstash can't be reached, requests are refused (`503`), never let through. Without Upstash env vars (local runs), counters are kept in memory. The client IP is `x-real-ip`, else the first `x-forwarded-for` entry. A Caliper audit with `--runs 2 --server-runs 1` uses 3 chat requests. **Caliper's audits skip the per-IP limits:** a request with `x-caliper-run` and the right `x-caliper-token` (checked by `caliper-timings`, in constant time) only counts toward the whole demo's daily cap, so an audit from one machine isn't refused as too many requests. A wrong token, a missing one, or `x-caliper-token` without `x-caliper-run` is limited like any visitor. The model's own limits still apply: Gemini answers its free tier's per-minute limit with an error, which the demo turns into `502`.
 
-The model key is only read on the server (`MODEL_API_KEY`, never a `NEXT_PUBLIC_` variable), sent only to the model as a bearer token, and never in a response: a model error answers `502` with a fixed message.
+The model key is only read on the server (`MODEL_API_KEY`, never a `NEXT_PUBLIC_` variable), sent only to the model as a bearer token, and never in a response: a model error answers `502` with a fixed message. The model's own rate limit (an HTTP 429 from the provider, e.g. Gemini's free tier per minute) answers `503` with `Retry-After: 60` and `{ "error": "The demo is busy right now. Try again in a minute.", "busy": true }`, which the page shows as a notice, not an error.
 
 ## Environment variables
 
@@ -59,7 +60,7 @@ CALIPER_TOKEN=local-demo-token node dist/cli.js audit http://localhost:3000/demo
 - bad input is refused (400) with no model call;
 - the 10-minute and daily limits work, per IP and for the whole demo;
 - Upstash down refuses the request (503);
-- a model error answers 502 without its message or the key;
+- the model's own 429 answers 503 busy with `Retry-After: 60`, and any other model error 502, both without its message or the key;
 - the fake model works without a key;
 - memory limits apply without Upstash.
 - a valid Caliper token gets through at the per-IP limit, while a wrong or missing token gets 429; an audit still counts toward, and is refused at, the daily cap.

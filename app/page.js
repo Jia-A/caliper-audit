@@ -7,7 +7,7 @@ import CopyButton from "./copy-button.js";
 import CursorFX from "./cursor-fx.js";
 import FeatureCards from "./feature-cards.js";
 import ScrollFX from "./scroll-fx.js";
-import ThemeToggle from "./theme-toggle.js";
+import SiteHeader from "./site-header.js";
 import { WARM } from "./quill-data.js";
 
 const INSTALL = "npm i -g caliper-ai && npx playwright@1.64.1 install chromium";
@@ -36,7 +36,7 @@ function HeroTimeline() {
         ))}
       </ul>
       <figcaption>
-        Real numbers from a Caliper report of Quill, Nov 14, 2026. <a href="/report/quill.html">See the report →</a>
+        Real numbers from a Caliper report of Quill, Nov 14, 2026. <a href="/report">See the report →</a>
       </figcaption>
     </figure>
   );
@@ -48,17 +48,7 @@ export default function Landing() {
       <ScrollFX />
       <CursorFX />
 
-      <header className="top">
-        <div className="wrap">
-          <a className="brand" href="/">Caliper</a>
-          <nav>
-            <a href="/demo">Demo</a>
-            <a href="/report/quill.html">Report</a>
-            <a href={GITHUB}>GitHub</a>
-            <ThemeToggle />
-          </nav>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main>
         <section className="hero">
@@ -78,7 +68,7 @@ export default function Landing() {
                 </p>
                 <div className="buttons h-btns">
                   <a className="btn primary" href="/demo">Try the demo</a>
-                  <a className="btn secondary" href="/report/quill.html">See a real report</a>
+                  <a className="btn secondary" href="/report">See a real report</a>
                 </div>
               </div>
               <HeroTimeline />
@@ -178,7 +168,7 @@ export default function Landing() {
             <h2>See where your AI feature&apos;s wait goes.</h2>
             <div className="buttons center">
               <a className="btn primary" href="/demo">Try the demo</a>
-              <a className="btn secondary" href="/report/quill.html">See a real report</a>
+              <a className="btn secondary" href="/report">See a real report</a>
             </div>
           </div>
         </section>
