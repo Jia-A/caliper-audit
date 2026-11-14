@@ -28,7 +28,7 @@
   --measure-snap: rgba(156, 195, 164, 0.45);
   --glow: rgba(156, 195, 164, 0.55);
   --scrim: rgba(8, 9, 8, 0.6);
-  --header: rgba(20, 21, 20, 0.96);
+  --header: #141514;
 }
 [data-theme="light"] {
   color-scheme: light;
@@ -57,7 +57,7 @@
   --measure-snap: rgba(76, 118, 86, 0.45);
   --glow: rgba(76, 118, 86, 0.5);
   --scrim: rgba(25, 27, 24, 0.35);
-  --header: rgba(246, 247, 244, 0.96);
+  --header: #f6f7f4;
 }
 html { background: var(--bg); }
 body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); }

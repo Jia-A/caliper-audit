@@ -1,5 +1,5 @@
 /* Shared by every page: the top bar and the theme toggle. Colours from theme.css. */
-.site-top { position: sticky; top: 0; z-index: 20; background: var(--header); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+.site-top { position: sticky; top: 0; z-index: 20; background: var(--header); border-bottom: 1px solid var(--border); }
 .site-top .bar { max-width: 1120px; margin: 0 auto; padding: 0 16px; display: flex; justify-content: space-between; align-items: center; height: 56px; }
 .site-top .brand { font-weight: 750; font-size: 18px; color: var(--text); text-decoration: none; letter-spacing: -0.01em; }
 .site-top nav { display: flex; align-items: center; gap: 20px; }
