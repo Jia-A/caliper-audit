@@ -21,6 +21,7 @@ const NEXT = [
   { title: "Hosted Caliper", line: "Run it without installing." },
   { title: "History", line: "See if you're getting faster or slower over time." },
   { title: "More backends", line: "Server timings for Go, PHP and Java." },
+  { title: "WebSocket apps", line: "Time replies that arrive over a WebSocket, not just HTTP." },
 ];
 
 function HeroTimeline() {
@@ -175,8 +176,8 @@ export default function Landing() {
         <section className="next">
           <div className="wrap">
             <div className="section-head" data-rv>
-              <p className="eyebrow mono">What&apos;s next</p>
-              <h2>None of this is built yet.</h2>
+              <p className="eyebrow mono">What&apos;s next · not built yet</p>
+              <h2>Where Caliper goes next.</h2>
             </div>
             <ul className="ncards">
               {NEXT.map((n) => (

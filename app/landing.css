@@ -212,7 +212,7 @@ html.locked { overflow: hidden; }
 /* what's next: shaped like the feature cards, but visibly not there yet (dashed, flat, quiet text,
    no hover, not .fcard so the measuring cursor ignores them) */
 .lp .next { padding-top: 0; }
-.lp .ncards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+.lp .ncards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .lp .ncard { display: flex; flex-direction: column; gap: 6px; padding: 18px; border: 1px dashed var(--border); border-radius: 14px; background: transparent; color: var(--muted); }
 .lp .ntag { align-self: flex-start; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border: 1px solid var(--border); border-radius: 999px; margin-bottom: 8px; }
 .lp .ncard h3 { font-size: 17px; font-weight: 650; color: color-mix(in srgb, var(--text) 70%, var(--muted)); }
@@ -229,7 +229,7 @@ html.locked { overflow: hidden; }
 .lp .foot .fine { flex-basis: 100%; font-size: 12px; }
 
 /* tablets and phones */
-@media (max-width: 1099.98px) { .lp .cards { grid-template-columns: repeat(2, 1fr); } .lp .ncards { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 1099.98px) { .lp .cards { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 899.98px) {
   .lp .hero-grid { grid-template-columns: 1fr; gap: 40px; padding-top: 48px; padding-bottom: 72px; }
   .lp .steps { grid-template-columns: 1fr; }
