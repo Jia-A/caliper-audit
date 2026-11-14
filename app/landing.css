@@ -26,16 +26,8 @@ html.locked .lp .measure { display: none; }
 .lp .readout.on { opacity: 0.9; }
 .lp .measure.snap .readout { color: var(--text); border-color: var(--measure-snap); }
 
-/* top bar */
-.lp .top { position: sticky; top: 0; z-index: 20; background: var(--header); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
-.lp .top .wrap { display: flex; justify-content: space-between; align-items: center; height: 56px; }
+.lp .btn:focus-visible, .lp .fcard:focus-visible, .lp .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .lp .brand { font-weight: 750; font-size: 18px; color: var(--text); text-decoration: none; letter-spacing: -0.01em; }
-.lp .top nav { display: flex; align-items: center; gap: 20px; }
-.lp .top nav a { color: var(--text); text-decoration: none; font-size: 15px; }
-.lp .top nav a:hover { color: var(--link); }
-.lp .theme-toggle { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; }
-.lp .theme-toggle:hover { border-color: var(--muted); }
-.lp .theme-toggle:focus-visible, .lp .btn:focus-visible, .lp .fcard:focus-visible, .lp .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 /* sections */
 .lp section { padding: 112px 0; }
@@ -231,8 +223,6 @@ html.locked { overflow: hidden; }
 @media (max-width: 639.98px) {
   .lp section { padding: 80px 0; }
   .lp .cards { grid-template-columns: 1fr; }
-  .lp .top nav { gap: 14px; }
-  .lp .top nav a { font-size: 14px; }
   .lp .halves { grid-template-columns: 1fr; }
   .lp .tl { padding: 18px; }
   .lp .seg { padding: 0 6px; }
